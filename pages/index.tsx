@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Template</title>
+        <title>Space Scene</title>
       </Head>
     </>
   )
