@@ -25,7 +25,6 @@ const starship = () => {
                         <History />
                     </Main>
                     <Sidebar>
-                        <FlightConditions />
                         <RoadClosures />
                         <TFRs />
                     </Sidebar>

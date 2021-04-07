@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubHeading } from '../../../SubHeading'
 import { Table } from './Table'
 import styled from 'styled-components'
 import { Btn } from '../../../Btn'
 import { Modal } from '../../../Modal'
 import { TextField } from '../../../TextField'
-import { useDispatch } from 'react-redux'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { newUpdate } from '../../../../redux/actions/updateActions'
 import { FlexEnd } from '../../../FlexEnd'
 import { DateTime } from '../../../DateTime'
+import { Select } from '../../../Select'
+import { getVehicles } from '../../../../redux/actions/vehicleActions'
 
 const Updates = () => {
 
@@ -17,18 +19,32 @@ const Updates = () => {
     const closeHandler = () => {
         setOpen(false)
     }
+
+    interface Vehicle {
+        name: String,
+        _id: String,
+    }
     
     const [title, setTitle] = useState<string>(undefined)
-    const [serialNumber, setSerialNumber] = useState<string>(undefined)
+    const [desc, setDesc] = useState<string>(undefined)
+    const [vehicle, setVehicle] = useState<Vehicle>(undefined)
     const [timestamp, setTimestamp] = useState<number>(new Date().getTime())
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(getVehicles())
+    }, [])
+
+    const { loading, error, data } = useSelector((state: RootStateOrAny) => state.vehicles)
+
     const submitHandler = async () => {
-        dispatch(newUpdate({ title, serialNumber, timestamp }))
+        const vehicleId = vehicle._id
+        dispatch(newUpdate({ title, desc, vehicleId, timestamp }))
         closeHandler()
         setTitle(undefined)
-        setSerialNumber(undefined)
+        setDesc(undefined)
+        setVehicle(undefined)
     }
 
     return (
@@ -40,20 +56,39 @@ const Updates = () => {
             <Table />
             {open && (
                 <Modal open={open} onClose={() => closeHandler()}>
-                    <TextField
-                        value={title}
-                        placeholder="Update Title"
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <TextField
-                        value={serialNumber}
-                        placeholder="Serial Number"
-                        onChange={(e) => setSerialNumber(e.target.value)}
-                    />
-                    <DateTime timestamp={timestamp} updateTimestamp={(ts) => setTimestamp(ts)} />
-                    <FlexEnd>
-                        <Btn padding="8px 15px" onClick={() => submitHandler()}>Add Update</Btn>
-                    </FlexEnd>
+                    {loading ? (
+                        <div>loading</div>
+                    ) : error ? (
+                        <div>error</div>
+                    ) : (
+                        <>
+                            <TextField
+                                value={title}
+                                placeholder="Title"
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                            <TextField
+                                value={desc}
+                                placeholder="Description"
+                                onChange={(e) => setDesc(e.target.value)}
+                                textarea
+                            />
+                            <div style={{marginBottom: '15px'}}>
+                                <Select 
+                                    value={vehicle?.name}
+                                    placeholder="Serial Number"
+                                >
+                                    {data.map((vehicle, i) => (
+                                        <Item key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</Item>
+                                    )).reverse()}
+                                </Select>    
+                            </div>
+                            <DateTime timestamp={timestamp} updateTimestamp={(ts) => setTimestamp(ts)} />
+                            <FlexEnd>
+                                <Btn padding="8px 15px" onClick={() => submitHandler()}>Add Update</Btn>
+                            </FlexEnd>
+                        </>
+                    )}
                 </Modal>
             )}
         </>
@@ -67,4 +102,9 @@ const Flex = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 15px;
+`
+
+const Item = styled.div`
+    padding: 8px 20px;
+    cursor: pointer;
 `

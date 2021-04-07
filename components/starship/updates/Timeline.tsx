@@ -17,7 +17,7 @@ const Timeline = () => {
 
     return (
         <>
-        <SubHeading>SN11 Updates</SubHeading>
+        <SubHeading>Updates</SubHeading>
         <Wrapper>
             {loading ? (
                 <div>loading</div>
@@ -26,14 +26,16 @@ const Timeline = () => {
             ) : (
                 <>
                     {data.map((update, i) => {
+                        if(i < 5) {
                         return (
-                        <Item 
-                            key={update._id} 
-                            last={i === 0}
-                            next={i === data.length-1 }
-                            update={update} 
-                        />
-                    )}).reverse()}
+                            <Item 
+                                key={update._id} 
+                                last={i === 0}
+                                next={i === data.length-1 }
+                                update={update} 
+                            />     
+                        )}
+                    }).reverse()}
                 </>
             )}
         </Wrapper>

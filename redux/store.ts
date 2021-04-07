@@ -4,10 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { updateReducer } from './reducers/updateReducer'
 import { combineReducers } from 'redux'
 import { vehicleReducer } from './reducers/vehicleReducer'
+import { launchReducer } from './reducers/launchReducer'
 
 const reducers = combineReducers({
     updates: updateReducer,
-    vehicles: vehicleReducer
+    vehicles: vehicleReducer,
+    launches: launchReducer
 })
 
 const middleware = [thunk]

@@ -7,7 +7,7 @@ export const newUpdate = (body) => async (dispatch) => {
 
         dispatch({ type: NEW_UPDATE_REQUEST })
 
-        const { data: { update } } = await axios.post('http://localhost:5000/api/v1/starship/update', body) 
+        const { data: { update } } = await axios.post('/api/v1/starship/update', body) 
 
         dispatch({
             type: NEW_UPDATE_SUCCESS,
@@ -31,7 +31,7 @@ export const getUpdates = () => async (dispatch) => {
 
         dispatch({ type: GET_UPDATES_REQUEST })
 
-        const { data: { updates }} = await axios.get('http://localhost:5000/api/v1/starship/update')
+        const { data: { updates }} = await axios.get('/api/v1/starship/update')
 
         dispatch({
             type: GET_UPDATES_SUCCESS,
@@ -49,15 +49,15 @@ export const getUpdates = () => async (dispatch) => {
 
 }
 
-export const editUpdate = ({ title, serialNumber, id }) => async (dispatch) => {
-    
-    const body = { title, serialNumber }
+export const editUpdate = (body, id) => async (dispatch) => {
 
+    console.log(body)
+    
     try {
 
         dispatch({ type: EDIT_UPDATE_REQUEST })
 
-        const { data: { update } } = await axios.post(`http://localhost:5000/api/v1/starship/update/${id}/edit`, body)
+        const { data: { update } } = await axios.post(`/api/v1/starship/update/${id}/edit`, body)
 
         dispatch({
             type: EDIT_UPDATE_SUCCESS,
@@ -81,7 +81,7 @@ export const deleteUpdate = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_UPDATE_REQUEST })
 
-        const { data: { update }} = await axios.post(`http://localhost:5000/api/v1/starship/update/${id}/delete`)
+        const { data: { update }} = await axios.post(`/api/v1/starship/update/${id}/delete`)
 
         dispatch({
             type: DELETE_UPDATE_SUCCESS,

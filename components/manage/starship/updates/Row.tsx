@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { deleteUpdate, editUpdate } from '../../../../redux/actions/updateActions'
 import { Btn } from '../../../Btn'
 import { TextField } from '../../../TextField'
+import { DateTime as DateTimeInput } from '../../../DateTime'
+import { Select } from '../../../Select'
 
 const Row = ({ update }) => {
 
@@ -13,27 +15,42 @@ const Row = ({ update }) => {
         setOpen(!open)
     }
 
+    interface Vehicle {
+        name: String,
+        _id: String,
+    }
+
     const id = update._id
     const [title, setTitle] = useState<string>(update.title)
-    const [serialNumber, setSerialNumber] = useState<string>(update.serialNumber)
-    const [dateFormatted, setDateFormatted] = useState<string>()
+    const [desc, setDesc] = useState<string>(update.desc)
+    const [vehicle, setVehicle] = useState<Vehicle>(update.vehicle)
+    const [timestamp, setTimestamp] = useState<number>(update.timestamp)
+    const [date, setDate] = useState<Date>(new Date(timestamp))
 
-    const date = new Date(update.timestamp)
-
-    const days = [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-    'Friday', 'Saturday', 'Sunday']
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+    'Friday', 'Saturday']
 
     const months = [ 'January', 'February', 'March', 'April','May', 'June', 
     'July', 'August', 'September', 'October', 'November', 'December' ]
 
+    const dateFormatted = 
+        days[date.getDay()] + ', ' 
+        + date.getDate() + ' ' 
+        + months[date.getMonth()] + ' • ' 
+        + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' 
+        + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+
     useEffect(() => {
-        setDateFormatted(days[date.getDay() - 1] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ' • ' + date.getHours() + ':' + date.getMinutes())
-    })
+        setDate(new Date(timestamp))
+    }, [timestamp])
 
     const dispatch = useDispatch()
 
+    const { loading, error, data } = useSelector((state: RootStateOrAny) => state.vehicles)
+
     const saveHandler = () => {
-        dispatch(editUpdate({ title, serialNumber, id }))
+        const vehicleId = vehicle._id
+        dispatch(editUpdate({ title, desc, vehicleId, timestamp }, id))
         toggleOpen()
     }
 
@@ -44,8 +61,8 @@ const Row = ({ update }) => {
     return (
         <Item>
             <Header onClick={toggleOpen}>
-                <Heading>{update.title}</Heading>
-                <SerialNumber>{update.serialNumber}</SerialNumber>
+                <Heading>{title}</Heading>
+                <SerialNumber>{vehicle.name}</SerialNumber>
                 <DateTime>{dateFormatted}</DateTime>
                 {!open ? 
                     (<Expand src="/expand.svg" />) : 
@@ -55,13 +72,37 @@ const Row = ({ update }) => {
             {open && (
             <Expanded>
                 <TextField 
+                    alternative
                     value={title}
+                    placeholder="Title"
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <TextField 
-                    value={serialNumber}
-                    onChange={(e) => setSerialNumber(e.target.value)}
+                <TextField
+                    alternative
+                    value={desc}
+                    placeholder="Description"
+                    onChange={(e) => setDesc(e.target.value)}
+                    textarea
                 />
+                <div style={{marginBottom: '15px'}}>
+                    <Select 
+                        value={vehicle?.name}
+                        placeholder="Serial Number"
+                    >
+                        {loading ? (
+                            <div>loading</div>
+                        ) : error ? (
+                            <div>error</div>
+                        ) : (
+                            <>
+                                {data.map((vehicle, i) => (
+                                    <Item key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</Item>
+                                ))}
+                            </>
+                        )}
+                    </Select>    
+                </div>
+                <DateTimeInput timestamp={timestamp} updateTimestamp={setTimestamp} />
                 <FlexEnd>
                     <FlexStart>
                         <Btn onClick={saveHandler} padding="10px 20px">Save</Btn>
@@ -133,4 +174,5 @@ const FlexStart = styled.div`
 const Remove = styled.img`
     margin-left: 10px;
     opacity: 0.25;
+    cursor: pointer;
 `

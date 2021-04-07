@@ -1,5 +1,5 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 interface Item {
     next?: Boolean,
@@ -8,7 +8,25 @@ interface Item {
 
 const Item = ({ next, last, update }) => {
 
-    console.log(next, last)
+    const [timestamp, setTimestamp] = useState<number>(update.timestamp)
+    const [date, setDate] = useState<Date>(new Date(timestamp))
+
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+    'Friday', 'Saturday']
+
+    const months = [ 'January', 'February', 'March', 'April','May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December' ]
+
+    const dateFormatted = 
+        days[date.getDay()] + ', ' 
+        + date.getDate() + ' ' 
+        + months[date.getMonth()] + ' • ' 
+        + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' 
+        + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+
+    useEffect(() => {
+        setDate(new Date(timestamp))
+    }, [timestamp])
 
     return (
         <Border last={last}>
@@ -16,10 +34,11 @@ const Item = ({ next, last, update }) => {
                 {next && (
                     <Next>Next Up</Next>
                 )}
+                <Vehicle>{update.vehicle.name}</Vehicle>
                 <Heading>{update.title}</Heading>
+                <Desc>{update.desc}</Desc>
                 <Flex>
-                    <Date>Monday, March 22</Date>
-                    <Time>7am - 3pm</Time>
+                    <DateTime>{dateFormatted}</DateTime>
                 </Flex>
             </Box>
             {/* <Last /> */}
@@ -83,18 +102,14 @@ const Box = styled.div`
     }
 `
 
-// const Last = styled.div`
-//     width: 100%;
-//     height: 100%;
-//     background: linear-gradient(to top, #121212 20%, rgba(0,0,0,0));
-//     z-index: 99999;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     transform: scale(1,1.2)
-// `
-
 const Next = styled.span`
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+`
+
+const Vehicle = styled.span`
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -109,25 +124,22 @@ const Heading = styled.h3`
     }
 `
 
+const Desc = styled.p`
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;    
+`
+
 const Flex = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
 `
 
-const Date = styled.span`
+const DateTime = styled.span`
     text-transform: uppercase;
     font-weight: 600;
     margin-right: 30px;
-    opacity: 0.5;
-    @media (max-width: 768px) {
-        font-size: 14px;
-    }
-`
-
-const Time = styled.span`
-    text-transform: uppercase;
-    font-weight: 600;
     opacity: 0.5;
     @media (max-width: 768px) {
         font-size: 14px;

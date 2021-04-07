@@ -7,7 +7,7 @@ export const newVehicle = (body) => async (dispatch) => {
 
         dispatch({ type: NEW_VEHICLE_REQUEST })
 
-        const { data: { vehicle } } = await axios.post('http://localhost:5000/api/v1/vehicle', body)
+        const { data: { vehicle } } = await axios.post('/api/v1/vehicle', body)
         
         dispatch({
             type: NEW_VEHICLE_SUCCESS,
@@ -31,7 +31,7 @@ export const getVehicles = () => async (dispatch) => {
 
         dispatch({ type: GET_VEHICLES_REQUEST })
 
-        const { data: { vehicles }} = await axios.get('http://localhost:5000/api/v1/vehicle')
+        const { data: { vehicles }} = await axios.get('/api/v1/vehicle')
 
         dispatch({
             type: GET_VEHICLES_SUCCESS,
@@ -56,7 +56,7 @@ export const editVehicle = (body, id) => async (dispatch) => {
 
         dispatch({ type: EDIT_VEHICLE_REQUEST })
 
-        const { data: { vehicle }} = await axios.post(`http://localhost:5000/api/v1/vehicle/${id}/edit`, body)
+        const { data: { vehicle }} = await axios.post(`/api/v1/vehicle/${id}/edit`, body)
 
         dispatch({
             type: EDIT_VEHICLE_SUCCESS,
@@ -80,7 +80,7 @@ export const deleteVehicle = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_VEHICLE_REQUEST })
 
-        const { data: { vehicle }} = await axios.post(`http://localhost:5000/api/v1/vehicle/${id}/delete`)
+        const { data: { vehicle }} = await axios.post(`/api/v1/vehicle/${id}/delete`)
 
         dispatch({
             type: DELETE_VEHICLE_SUCCESS,

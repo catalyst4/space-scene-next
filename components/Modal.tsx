@@ -37,12 +37,11 @@ export { Modal }
 
 const Bg = styled.div`
     width: 100%;
-    height: 100vh;
+    min-height: 100%;
     background: rgba(0, 0, 0,0.8);
     top: 0;
     left: 0;
-    position: fixed;
-    overflow-y: hidden;
+    position: absolute;
     z-index: 99999999;
     display: flex;
     flex-direction: column;

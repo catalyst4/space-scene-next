@@ -33,4 +33,5 @@ const Box = styled.div`
     border-radius: 10px;
     font-weight: 600;
     letter-spacing: 2px;
+    text-transform: uppercase;
 `

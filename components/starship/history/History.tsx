@@ -25,7 +25,7 @@ const History = () => {
             ) : (
                 <Grid>
                     {data
-                        .filter(vehicle => vehicle.series === 'Starship')
+                        .filter(vehicle => vehicle.name.startsWith('SN') || vehicle.name.startsWith('BN'))
                         .map(vehicle => (
                             <Item key={vehicle._id} vehicle={vehicle} />
                         ))
