@@ -17,7 +17,7 @@ const History = () => {
 
     return (
         <>
-            <SubHeading>Starship History</SubHeading>
+            <SubHeading mb>Starship History</SubHeading>
             {loading ? (
                 <div>loading</div>
             ) : error ? (

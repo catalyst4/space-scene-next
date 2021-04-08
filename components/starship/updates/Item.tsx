@@ -6,8 +6,10 @@ interface Item {
     last?: Boolean,
 }
 
-const Item = ({ next, last, update }) => {
+const Item = ({ first, last, update }) => {
 
+    const shortDesc = (update.desc).substring(0,100)
+    const [fullDesc, setFullDesc] = useState<Boolean>(shortDesc.length < 50 ? true : false)
     const [timestamp, setTimestamp] = useState<number>(update.timestamp)
     const [date, setDate] = useState<Date>(new Date(timestamp))
 
@@ -28,33 +30,36 @@ const Item = ({ next, last, update }) => {
         setDate(new Date(timestamp))
     }, [timestamp])
 
+    const next = timestamp > new Date().getTime()
+
     return (
-        <Border last={last}>
-            <Box>
-                {next && (
-                    <Next>Next Up</Next>
-                )}
-                <Vehicle>{update.vehicle.name}</Vehicle>
-                <Heading>{update.title}</Heading>
-                <Desc>{update.desc}</Desc>
-                <Flex>
-                    <DateTime>{dateFormatted}</DateTime>
-                </Flex>
-            </Box>
-            {/* <Last /> */}
-        </Border>
+        <Wrapper first={first} last={last} next={next}>
+            <Border>
+                <Box>
+                    {next && (
+                        <Next>Next Up</Next>
+                    )}
+                    <Vehicle>{update.vehicle.name}</Vehicle>
+                    <Heading>{update.title}</Heading>
+                    {fullDesc ? (
+                        <Desc>{update.desc}</Desc>
+                    ) : (
+                        <Desc>{shortDesc}... <ReadMore onClick={() => setFullDesc(true)}>Read More</ReadMore></Desc>    
+                    )}
+                    <Flex>
+                        <DateTime>{dateFormatted}</DateTime>
+                    </Flex>
+                </Box>
+            </Border>    
+        </Wrapper>
     )
 }
 
 export { Item }
 
-const Border = styled.div`
-    padding: 2px;
-    background: ${props => props.theme.pinkGradient};
-    border-radius: 20px;
+const Wrapper = styled.div`
     position: relative;
-    margin-bottom: 20px;
-    box-shadow: ${props => props.theme.boxShadow};
+    padding-bottom: 20px;
     &::before {
         content: '';
         width: 15px;
@@ -79,17 +84,24 @@ const Border = styled.div`
         }
         content: '';
         width: 7px;
-        height: ${props => props.last ? '50%' : '100%'};
+        height: ${props => props.last ? '100%' : '100%'};
         position: absolute;
-        top: 60%;
+        top: ${props => props.first ? '50%' : '0%'};
         left: -39px;
-        background: ${props => props.last ? `linear-gradient(to top, rgba(0,0,0,0), ${props.theme.timeline})` : props.theme.timeline};
+        background: ${props => props.last ? `linear-gradient(to top, rgba(0,0,0,0), ${props.theme.timeline} 50%)` : props.theme.timeline};
         @media (max-width: 768px) {
             width: 5px;
             left: -24px;
-            top: 50%;
+            top: ${props => props.first ? '50%' : '0%'};
         }
     }
+`
+
+const Border = styled.div`
+    padding: 2px;
+    background: ${props => props.theme.pinkGradient};
+    border-radius: 20px;
+    box-shadow: ${props => props.theme.boxShadow};
 `
 
 const Box = styled.div`
@@ -102,7 +114,7 @@ const Box = styled.div`
     }
 `
 
-const Next = styled.span`
+const Next = styled.div`
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -127,7 +139,15 @@ const Heading = styled.h3`
 const Desc = styled.p`
     font-size: 16px;
     font-weight: 400;
-    margin-bottom: 10px;    
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.9);  
+`
+
+const ReadMore = styled.a`
+    margin-left: 10px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
 `
 
 const Flex = styled.div`

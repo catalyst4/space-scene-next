@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react'
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import styled from 'styled-components'
-import { getUpdates } from '../../../redux/actions/updateActions'
 import { SubHeading } from '../../SubHeading'
 import { Item } from './Item'
 
-const Timeline = () => {
+interface Update {
+    title: String,
+    desc: String,
+    timestamp: number,
+    _id: number
+}
 
-    const dispatch = useDispatch()
+interface Timeline {
+    loading: Boolean,
+    error: Boolean,
+    data: Array<Update>,
+    limit?: number
+}
 
-    useEffect(() => {
-        dispatch(getUpdates())
-    }, [])
-
-    const { loading, error, data } = useSelector((state: RootStateOrAny) => state.updates)
+const Timeline = ({ loading, error, data, limit }: Timeline) => {
 
     return (
         <>
-        <SubHeading>Updates</SubHeading>
+        <SubHeading mb>Updates</SubHeading>
         <Wrapper>
             {loading ? (
                 <div>loading</div>
@@ -26,16 +30,29 @@ const Timeline = () => {
             ) : (
                 <>
                     {data.map((update, i) => {
-                        if(i < 5) {
-                        return (
-                            <Item 
-                                key={update._id} 
-                                last={i === 0}
-                                next={i === data.length-1 }
-                                update={update} 
-                            />     
-                        )}
-                    }).reverse()}
+                        console.log(limit + ':' + i)
+                        if(!limit) {
+                            return (
+                                <Item 
+                                    key={update._id}
+                                    first={i === 0}
+                                    last={i === limit-1}
+                                    update={update} 
+                                />     
+                            )
+                        } else {
+                            if(i < limit) {
+                                return (
+                                    <Item 
+                                        key={update._id} 
+                                        first={i === 0}
+                                        last={i === limit-1}
+                                        update={update} 
+                                    />     
+                                )    
+                            }
+                        }
+                    })}
                 </>
             )}
         </Wrapper>

@@ -10,6 +10,7 @@ import { newLaunch, getLaunches } from '../../../redux/actions/launchActions'
 import { Select } from '../../Select'
 import { getVehicles } from '../../../redux/actions/vehicleActions'
 import styled from 'styled-components'
+import { Table } from './Table'
 
 const Launches = () => {
 
@@ -46,21 +47,11 @@ const Launches = () => {
 
     return (
         <div>
-            <FlexStart>
+            <FlexStart mb>
                 <SubHeading>Launches</SubHeading>
                 <Btn padding="4px 10px" onClick={() => setOpen(true)}>+ Add</Btn>
             </FlexStart>
-            {launches.loading ? (
-                <div>loading</div>
-            ) : launches.error ? (
-                <div>error</div>
-            ) : (
-                <>
-                    {launches.data.map((launch, i) => (
-                        <div key={i}>{launch.name} / {launch.vehicle.name}</div>
-                    )).reverse()}
-                </>
-            )}
+            <Table />
             {open && (
                 <Modal open={open} onClose={() => closeHandler()}>
                     <TextField

@@ -4,6 +4,7 @@ import { Container } from '../../components/Container'
 import { Header } from '../../components/Header'
 import { Launches } from '../../components/manage/launches/Launches'
 import { Vehicles } from '../../components/manage/vehicles/Vehicles'
+import styled from 'styled-components'
 
 const index = () => {
     return (
@@ -12,8 +13,10 @@ const index = () => {
                 <Header>Dashboard</Header>
                 <Link href="/manage/starship">Starship
                 </Link>
-                <Vehicles />
-                <Launches />
+                <FlexBetween>
+                    <Launches />  
+                    <Vehicles />  
+                </FlexBetween>
             </Container> 
            
         </div>
@@ -21,3 +24,11 @@ const index = () => {
 }
 
 export default index
+
+const FlexBetween = styled.div`
+    display: flex;
+    justify-content: space-between;
+    & > div {
+        width: 49%;
+    }
+`

@@ -8,7 +8,7 @@ export const vehicleReducer = (state = { data: [] }, action) => {
         case NEW_VEHICLE_REQUEST: 
             return { ...state }
         case NEW_VEHICLE_SUCCESS: 
-            return { ...state, data: [...state.data, action.payload]}
+            return { ...state, data: [...state.data, action.payload] }
         case NEW_VEHICLE_FAIL:
             return { ...state, error: action.payload }
         

@@ -1,5 +1,17 @@
 import axios from "axios"
-import { DELETE_VEHICLE_FAIL, DELETE_VEHICLE_REQUEST, DELETE_VEHICLE_SUCCESS, EDIT_VEHICLE_FAIL, EDIT_VEHICLE_REQUEST, EDIT_VEHICLE_SUCCESS, GET_VEHICLES_FAIL, GET_VEHICLES_REQUEST, GET_VEHICLES_SUCCESS, NEW_VEHICLE_REQUEST, NEW_VEHICLE_SUCCESS } from "../constants/vehicleContants"
+import { 
+    DELETE_VEHICLE_FAIL, 
+    DELETE_VEHICLE_REQUEST, 
+    DELETE_VEHICLE_SUCCESS, 
+    EDIT_VEHICLE_FAIL, 
+    EDIT_VEHICLE_REQUEST, 
+    EDIT_VEHICLE_SUCCESS, 
+    GET_VEHICLES_FAIL, 
+    GET_VEHICLES_REQUEST, 
+    GET_VEHICLES_SUCCESS, 
+    NEW_VEHICLE_FAIL, 
+    NEW_VEHICLE_REQUEST, 
+    NEW_VEHICLE_SUCCESS } from "../constants/vehicleContants"
 
 export const newVehicle = (body) => async (dispatch) => {
 
@@ -16,7 +28,7 @@ export const newVehicle = (body) => async (dispatch) => {
 
     } catch(e) {
         dispatch({
-            type: NEW_VEHICLE_SUCCESS,
+            type: NEW_VEHICLE_FAIL,
             payload: e.response && e.response.data.message 
                 ? e.response.data.message
                 : e.message

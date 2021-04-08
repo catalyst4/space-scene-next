@@ -7,6 +7,7 @@ import { FlexStart } from '../../FlexStart'
 import { Modal } from '../../Modal'
 import { TextField } from '../../TextField'
 import { FlexEnd } from '../../FlexEnd'
+import { Table } from './Table'
 
 const Vehicles = () => {
 
@@ -22,12 +23,6 @@ const Vehicles = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getVehicles())
-    }, [])
-
-    const { loading, error, data } = useSelector((state: RootStateOrAny) => state.vehicles)
-
     const submitHandler = () => {
         dispatch(newVehicle({ name, series, manufacturer }))
         closeHandler()
@@ -38,21 +33,11 @@ const Vehicles = () => {
 
     return (
         <div>
-            <FlexStart>
+            <FlexStart mb>
                 <SubHeading>Vehicles</SubHeading>
                 <Btn padding="4px 10px" onClick={() => setOpen(true)}>+ Add</Btn>
             </FlexStart>
-            {loading ? (
-                <div>loading</div>
-            ) : error ? (
-                <div>error</div>
-            ) : (
-                <>
-                    {data.map((vehicle, i) => (
-                        <div key={i}>{vehicle.name} / {vehicle.series} / {vehicle.manufacturer}</div>
-                    )).reverse()}
-                </>
-            )}
+            <Table />
             {open && (
                 <Modal open={open} onClose={() => closeHandler()}>
                     <TextField
