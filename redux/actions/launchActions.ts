@@ -9,8 +9,6 @@ export const newLaunch = (body) => async (dispatch) => {
 
         const { data: { launch }} = await axios.post('/api/v1/launch', body)
 
-        console.log(launch)
-
         dispatch({
             type: ADD_LAUNCH_SUCCESS,
             payload: launch

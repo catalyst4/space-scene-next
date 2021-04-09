@@ -6,7 +6,6 @@ const Modal = ({ children, open, onClose }) => {
     useEffect(() => {
         if(open === true) {
             window.onclick = (e) => {
-                console.log('hi')
                 const bg = document.getElementById('bg')
                 if(e.target === bg) {
                     onClose()

@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-interface Item {
-    next?: Boolean,
-    last?: Boolean,
+interface Update {
+    title: String,
+    desc: String,
+    timestamp: number,
+    vehicle: Vehicle
 }
 
-const Item = ({ first, last, update }) => {
+interface Vehicle {
+    name: String
+}
+
+interface Item {
+    first?: Boolean,
+    next?: Boolean,
+    last?: Boolean,
+    update?: Update,
+}
+
+const Item = ({ first, last, update }: Item) => {
 
     const shortDesc = (update.desc).substring(0,100)
     const [fullDesc, setFullDesc] = useState<Boolean>(shortDesc.length < 50 ? true : false)
@@ -48,7 +61,7 @@ const Item = ({ first, last, update }) => {
                     )}
                     <Flex>
                         <DateTime>{dateFormatted}</DateTime>
-                    </Flex>
+                    </Flex>    
                 </Box>
             </Border>    
         </Wrapper>

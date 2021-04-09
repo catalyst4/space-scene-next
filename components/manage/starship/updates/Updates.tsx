@@ -44,7 +44,6 @@ const Updates = () => {
         closeHandler()
         setTitle(undefined)
         setDesc(undefined)
-        setVehicle(undefined)
     }
 
     return (

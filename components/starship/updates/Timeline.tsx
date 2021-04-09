@@ -2,12 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { SubHeading } from '../../SubHeading'
 import { Item } from './Item'
+import { Skeleton } from './Skeleton'
 
 interface Update {
     title: String,
     desc: String,
     timestamp: number,
+    vehicle: Vehicle,
     _id: number
+}
+
+interface Vehicle {
+    name: String,
 }
 
 interface Timeline {
@@ -24,19 +30,18 @@ const Timeline = ({ loading, error, data, limit }: Timeline) => {
         <SubHeading mb>Updates</SubHeading>
         <Wrapper>
             {loading ? (
-                <div>loading</div>
+                <Skeleton />
             ) : error ? (
                 <div>error</div>
             ) : (
                 <>
                     {data.map((update, i) => {
-                        console.log(limit + ':' + i)
                         if(!limit) {
                             return (
                                 <Item 
                                     key={update._id}
                                     first={i === 0}
-                                    last={i === limit-1}
+                                    last={i === data.length-1}
                                     update={update} 
                                 />     
                             )

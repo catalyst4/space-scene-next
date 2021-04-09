@@ -50,8 +50,6 @@ export const getUpdates = () => async (dispatch) => {
 }
 
 export const editUpdate = (body, id) => async (dispatch) => {
-
-    console.log(body)
     
     try {
 

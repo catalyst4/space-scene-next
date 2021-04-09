@@ -6,6 +6,7 @@ import { Btn } from '../../../Btn'
 import { TextField } from '../../../TextField'
 import { DateTime as DateTimeInput } from '../../../DateTime'
 import { Select } from '../../../Select'
+import { dateFormatter } from '../../../../util/date'
 
 const Row = ({ update }) => {
 
@@ -25,24 +26,8 @@ const Row = ({ update }) => {
     const [desc, setDesc] = useState<string>(update.desc)
     const [vehicle, setVehicle] = useState<Vehicle>(update.vehicle)
     const [timestamp, setTimestamp] = useState<number>(update.timestamp)
-    const [date, setDate] = useState<Date>(new Date(timestamp))
 
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-    'Friday', 'Saturday']
-
-    const months = [ 'January', 'February', 'March', 'April','May', 'June', 
-    'July', 'August', 'September', 'October', 'November', 'December' ]
-
-    const dateFormatted = 
-        days[date.getDay()] + ', ' 
-        + date.getDate() + ' ' 
-        + months[date.getMonth()] + ' • ' 
-        + (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' 
-        + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
-
-    useEffect(() => {
-        setDate(new Date(timestamp))
-    }, [timestamp])
+    const date = dateFormatter(timestamp)
 
     const dispatch = useDispatch()
 
@@ -63,7 +48,7 @@ const Row = ({ update }) => {
             <Header onClick={toggleOpen}>
                 <Heading>{title}</Heading>
                 <SerialNumber>{vehicle.name}</SerialNumber>
-                <DateTime>{dateFormatted}</DateTime>
+                <DateTime>{date}</DateTime>
                 {!open ? 
                     (<Expand src="/expand.svg" />) : 
                     (<Expand open src="/expand.svg" />)
