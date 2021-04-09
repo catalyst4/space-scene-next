@@ -14,7 +14,7 @@ export { Indicator }
 
 const Border = styled.div`
     padding: 2px;
-    border: 1px solid ${props => props.status === 1 ? 'green' : 'red'};
+    border: 1px solid ${props => props.status ? 'green' : 'red'};
     border-radius: 99999px;
     margin-right: 25px;
 `
@@ -22,6 +22,6 @@ const Border = styled.div`
 const Dot = styled.div`
     width: 10px;
     height: 10px;
-    background: ${props => props.status === 1 ? props.theme.greenGradient : props.theme.redGradient};
+    background: ${props => props.status ? props.theme.greenGradient : props.theme.redGradient};
     border-radius: 99999px;
 `

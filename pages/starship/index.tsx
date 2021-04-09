@@ -17,11 +17,13 @@ const starship = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getUpdates())
-    }, [])
-
     const { loading, error, data } = useSelector((state: RootStateOrAny) => state.updates)
+    
+    useEffect(() => {
+        if(data.length === 0) {
+            dispatch(getUpdates())    
+        }
+    }, [])
 
     return (
         <>
@@ -37,6 +39,7 @@ const starship = () => {
                         <History />
                     </Main>
                     <Sidebar>
+                        <FlightConditions />
                         <RoadClosures />
                         <TFRs />
                     </Sidebar>

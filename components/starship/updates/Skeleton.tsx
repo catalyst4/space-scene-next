@@ -8,13 +8,14 @@ const Skeleton = () => {
     return (
         <>
             {skeleton.map((item, i) => (
-                <Wrapper first={i === 0} last={i === 2}>
+                <Wrapper key={i} first={i === 0} last={i === 2}>
                     <Border>
                         <Box>
                             <Vehicle /> 
                             <Heading />
                             <Desc />
                             <Desc />
+                            <DateTime />
                         </Box>
                     </Border>    
                 </Wrapper>    
@@ -73,7 +74,6 @@ const Border = styled.div`
 `
 
 const Box = styled.div`
-    height: 200px;
     padding: 20px;
     border-radius: 20px;
     background: ${props => props.theme.surface};
@@ -108,4 +108,11 @@ const Desc = styled.p`
     border-radius: 5px;
     height: 20px;
     margin-bottom: 8px;
+`
+
+const DateTime = styled.div`
+    width: 40%;
+    background: #303030;
+    border-radius: 5px;
+    height: 20px;
 `

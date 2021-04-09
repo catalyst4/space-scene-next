@@ -9,11 +9,13 @@ const History = () => {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getVehicles())
-    }, [])
-
     const { loading, error, data } = useSelector((state: RootStateOrAny) => state.vehicles)
+
+    useEffect(() => {
+        if(data.length === 0) {
+            dispatch(getVehicles())    
+        }
+    }, [])
 
     return (
         <>

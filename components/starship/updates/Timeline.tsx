@@ -32,7 +32,7 @@ const Timeline = ({ loading, error, data, limit }: Timeline) => {
             {loading ? (
                 <Skeleton />
             ) : error ? (
-                <div>error</div>
+                <div>Data could not be fetched. Please contact jayk#0001 on Discord</div>
             ) : (
                 <>
                     {data.map((update, i) => {

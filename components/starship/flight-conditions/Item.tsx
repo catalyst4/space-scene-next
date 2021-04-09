@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import { Indicator } from './Indicator'
 
-const Item = ({ item }) => {
+const Item = ({ children, status }) => {
 
     return (
         <Box>
-          <Indicator status={item.status} />
-          <Text>{item.name}</Text>
+          <Indicator status={status} />
+          <Text>{children}</Text>
         </Box>
     )
 }
