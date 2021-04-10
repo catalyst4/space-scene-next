@@ -2,12 +2,18 @@ import React from 'react'
 import styled from 'styled-components'
 import { Indicator } from './Indicator'
 
-const Item = ({ children, status }) => {
+interface Item {
+    status?: Boolean,
+    children?: any,
+    skeleton?: Boolean
+}
+
+const Item = ({ children, status, skeleton }: Item) => {
 
     return (
         <Box>
-          <Indicator status={status} />
-          <Text>{children}</Text>
+          <Indicator status={status} skeleton={skeleton} />
+          {!skeleton ? <Text>{children}</Text> : <SkelText />}
         </Box>
     )
 }
@@ -24,4 +30,11 @@ const Box = styled.div`
 
 const Text = styled.div`
 
+`
+
+const SkelText = styled.div`
+    width: 100%;
+    background: #303030;
+    border-radius: 5px;
+    height: 20px;
 `

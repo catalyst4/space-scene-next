@@ -22,12 +22,15 @@ const Modal = ({ children, open, onClose }) => {
     return (
         <>
             <Bg id="bg">
+                
+            </Bg>
+            <Center>
                 <Border id="modal">
                     <Box>
                         {children}
                     </Box>
-                </Border>
-            </Bg>
+                </Border>    
+            </Center>
         </>
     )
 }
@@ -40,10 +43,21 @@ const Bg = styled.div`
     background: rgba(0, 0, 0,0.8);
     top: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     z-index: 99999999;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+const Center = styled.div`
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    display: flex;
     justify-content: center;
     align-items: center;
 `
@@ -52,6 +66,8 @@ const Border = styled.div`
     background: ${props => props.theme.pinkGradient};
     padding: 3px;
     border-radius: 20px;
+    position: absolute;
+    z-index: 9999999999999999;
 `
 
 const Box = styled.div`

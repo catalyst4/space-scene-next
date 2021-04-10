@@ -9,7 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import { newUpdate } from '../../../../redux/actions/updateActions'
 import { FlexEnd } from '../../../FlexEnd'
 import { DateTime } from '../../../DateTime'
-import { Select } from '../../../Select'
+import { DropdownItem, Select } from '../../../Select'
 import { getVehicles } from '../../../../redux/actions/vehicleActions'
 
 const Updates = () => {
@@ -78,8 +78,8 @@ const Updates = () => {
                                     placeholder="Serial Number"
                                 >
                                     {data.map((vehicle, i) => (
-                                        <Item key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</Item>
-                                    )).reverse()}
+                                        <DropdownItem key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</DropdownItem>
+                                    ))}
                                 </Select>    
                             </div>
                             <DateTime timestamp={timestamp} updateTimestamp={(ts) => setTimestamp(ts)} />
@@ -101,9 +101,4 @@ const Flex = styled.div`
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 15px;
-`
-
-const Item = styled.div`
-    padding: 8px 20px;
-    cursor: pointer;
 `

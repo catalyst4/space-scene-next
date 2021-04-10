@@ -19,8 +19,6 @@ const Select = ({ value, children, placeholder }) => {
     )
 }
 
-export { Select }
-
 const Wrapper = styled.div`
     width: 100%;
     position: relative;
@@ -51,4 +49,12 @@ const Dropdown = styled.div`
     left: 0;
     border-radius: 15px;
     z-index: 999;
+    border: 1px solid #121212;
 `
+
+const DropdownItem = styled.div`
+    padding: 15px 20px;
+    border-bottom: 1px solid #121212;
+`
+
+export { Select, DropdownItem }

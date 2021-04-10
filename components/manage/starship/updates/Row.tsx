@@ -5,7 +5,7 @@ import { deleteUpdate, editUpdate } from '../../../../redux/actions/updateAction
 import { Btn } from '../../../Btn'
 import { TextField } from '../../../TextField'
 import { DateTime as DateTimeInput } from '../../../DateTime'
-import { Select } from '../../../Select'
+import { DropdownItem, Select } from '../../../Select'
 import { dateFormatter } from '../../../../util/date'
 
 const Row = ({ update }) => {
@@ -81,7 +81,7 @@ const Row = ({ update }) => {
                         ) : (
                             <>
                                 {data.map((vehicle, i) => (
-                                    <Item key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</Item>
+                                    <DropdownItem key={i} onClick={() => setVehicle(vehicle)}>{vehicle.name}</DropdownItem>
                                 ))}
                             </>
                         )}

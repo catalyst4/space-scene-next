@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { getVehicles } from '../../../redux/actions/vehicleActions'
 import { SideHeading } from '../../SideHeading'
 import { Item } from './Item'
+import { Skeleton } from './Skeleton'
 
 const FlightConditions = () => {
 
@@ -22,7 +23,7 @@ const FlightConditions = () => {
     return (
         <div>
             {loading ? (
-                <div>loading</div>
+                <Skeleton />
             ) : error ? (
                 <div>error</div>
             ) : (
