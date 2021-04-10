@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Indicator = ({ status, skeleton }) => {
+interface Indicator {
+    status?: Boolean,
+    skeleton?: Boolean
+}
+
+const Indicator = ({ status, skeleton }: Indicator) => {
 
     return (
         <Border status={status} skeleton={skeleton}>

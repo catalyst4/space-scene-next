@@ -5,7 +5,7 @@ import { Indicator } from '../../../starship/flight-conditions/Indicator'
 const Item = () => {
     return (
         <Box>
-            <Indicator status={1} />
+            <Indicator status={true} />
             <Text>Static Fire Complete</Text>
         </Box>
     )
